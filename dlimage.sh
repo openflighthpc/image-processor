@@ -64,7 +64,12 @@ done
 if [[ $input == true ]]; then
   echo "s3 link for image raw file?"
   read link
-  echo "What platform is the image going to be on? (leave blank for smart analysis)"
+fi
+
+filename=${link##*/}
+
+if [[ $input == true ]]; then
+  echo "What platform is the image going to be on?"
   read platform
   echo "what is the version number (e.g. 2023.4)"
   read version
@@ -72,8 +77,28 @@ if [[ $input == true ]]; then
   read rc
   echo "What is the release date?"
   read release_date
+else
+  echo "text"
 fi
 
 
 # actually download the image
-aws s3 cp "$link" "$dl_filepath"
+aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
+
+case $platform in
+  openstack)
+    echo "WIP, please upload manually"
+    ;;
+  aws)
+    echo "uploading aws image"
+    . aws/connected_image_upload_script.sh -p "final_image_name=Flight Solo ${version}-${release_date}" -p "aws_image_name=$filename" 
+    ;;
+  azure)
+    echo "uploading azure image"
+    . azure/create_azure_image.sh -p "local_image_filepath=downloads/$filename" -p "build_number=$rc"
+    
+    ;;
+  *)
+    echo "ERROR: platform \"$platform\" is not an option."
+    ;;
+esac
