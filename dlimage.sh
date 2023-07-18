@@ -82,7 +82,7 @@ else
 fi
 
 # actually download the image
-#aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
+aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
 
 case $platform in
   openstack)
