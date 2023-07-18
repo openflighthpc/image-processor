@@ -81,13 +81,14 @@ else
   echo "text"
 fi
 
-
 # actually download the image
 #aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
 
 case $platform in
   openstack)
-    echo "WIP, please upload manually"
+    echo "uploading openstack image"
+    cd openstack/
+    . openstack_upload.sh
     ;;
   aws)
     echo "uploading aws image"
