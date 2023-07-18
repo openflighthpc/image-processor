@@ -7,13 +7,7 @@ download_path="../downloads/"
 
 final_name="Flight Solo ${version}-${rc}-${release_date}"
 
-final_name="test-o-image1"
-
-filename="Flight_Solo_2023-4_generic-cloudinit.raw"
-
 # check if the image already exists
-
-
 openstack image list -f value | grep "$final_name"; result=$?
 
 if [[ $result != 1 ]]; then
@@ -22,20 +16,17 @@ if [[ $result != 1 ]]; then
 fi
 
 # now upload it
-
 create_out=$(openstack image create --disk-format raw  --shared --file "${download_path}${filename}" --min-disk 10 --min-ram 2048 "$final_name" --format yaml)
 
 echo "$create_out"
-
 echo "$create_out" | grep "id:"
 
 id_line=$(echo "$create_out" | grep "id:")
-
 id=$(echo "${id_line#*:}"| xargs)
-
 echo "id: $id" 
 
 
+# check that it is ready
 openstack image show "$id" -f yaml | grep "status" | grep "active"; result=$?
 counter=60
 while [[ $result != 0 ]]; do
@@ -50,4 +41,3 @@ if [[ $counter -le 0 ]]; then
 fi
 
 echo "image uploaded and activated"
-
