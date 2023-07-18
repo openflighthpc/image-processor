@@ -1,2 +1,7 @@
-#ignore all downloaded images
+# ignore all downloaded images
 downloads/*.raw
+
+# ignore aws creation files
+aws/trust-policy.json
+aws/role-policy.json
+aws/containers.json
