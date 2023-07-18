@@ -1,0 +1,2 @@
+#ignore all downloaded images
+./downloads/*.raw
