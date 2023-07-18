@@ -2,7 +2,7 @@
 
 # download an image with an s3 link e.g. s3://flight-images/SOLO2-2023.4-2006231854_generic-cloudinit.raw
 
-link="s3://flight-images/SOLO2-2023.4-2006231854_generic-cloudinit.raw"
+link="s3://flight-images/SOLO2-2023.4-0407231230_aws.raw"
 input=true
 platform="" # aws/openstack/azure
 rc="rc-"
@@ -83,7 +83,7 @@ fi
 
 
 # actually download the image
-aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
+#aws s3 cp "$link" "$dl_filepath" || { echo 'download failed' ; exit 1; }
 
 case $platform in
   openstack)
@@ -91,12 +91,12 @@ case $platform in
     ;;
   aws)
     echo "uploading aws image"
-    . aws/connected_image_upload_script.sh -p "final_image_name=Flight Solo ${version}-${release_date}" -p "aws_image_name=$filename" 
+    cd aws/
+    . connected_image_upload_script.sh -p "final_image_name=Flight Solo ${version}-${rc}-${release_date}" -p "aws_image_name=$filename" 
     ;;
   azure)
     echo "uploading azure image"
     . azure/create_azure_image.sh -p "local_image_filepath=downloads/$filename" -p "build_number=$rc"
-    
     ;;
   *)
     echo "ERROR: platform \"$platform\" is not an option."
