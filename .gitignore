@@ -5,3 +5,7 @@ downloads/*.raw
 aws/trust-policy.json
 aws/role-policy.json
 aws/containers.json
+
+# ignore openstack env files
+openstack/openstack
+openstack/*-openrc.sh
