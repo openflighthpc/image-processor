@@ -1,6 +1,7 @@
 #!/bin/bash -l
+project_rc_file="Ivan_testing-openrc.sh"
 
-. Ivan_testing-openrc.sh
+. $project_rc_file
 source openstack/bin/activate
 
 download_path="../downloads/"
