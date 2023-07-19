@@ -5,7 +5,7 @@ storage_account_name="openflightimages"
 container_name="images"
 local_image_filepath="downloads/"
 upload_resource_group="openflight-images"
-build_number="rc"
+#build_number="rc"
 
 # get data
 while [[ $# -gt 0 ]]; do # while there are not 0 args
@@ -34,8 +34,11 @@ done
 
 storage_blob_name=${local_image_filepath##*/}; storage_blob_name=${storage_blob_name%.*} ; echo "Storage blob name: $storage_blob_name"
 
-version_number=${storage_blob_name#*-}; version_number=${version_number%-*} ; echo "version number: $version_number"
-build_date=${storage_blob_name##*-}; build_date=${build_date%_*} ; echo "build date: $build_date"
+#version_number=${storage_blob_name#*-}; version_number=${version_number%-*} ; echo "version number: $version_number"
+#build_date=${storage_blob_name##*-}; build_date=${build_date%_*} ; echo "build date: $build_date"
+version_number="$version"
+build_date="$release_date"
+build_number="$rc"
 image_name="Flight-Solo-$version_number-$build_number-$build_date" ; echo "image name: $image_name"
 # https://wiki.bash-hackers.org/syntax/pe
 # Flight-Solo-2023.1-rc5-03.02.2023
