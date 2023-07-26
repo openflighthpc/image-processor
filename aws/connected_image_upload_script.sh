@@ -146,8 +146,6 @@ aws ec2 create-tags \
 
 
 
-aws ec2 register-image --name "$final_image_name" --region=eu-west-2 --description "$final_image_name" --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":10, \"SnapshotId\":\"$snapname\"}}]" --root-device-name "/dev/sda1"
+aws ec2 register-image --name "$final_image_name" --region=eu-west-2 --description "$final_image_name" --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":10, \"SnapshotId\":\"$snapname\"}}]" --root-device-name "/dev/sda1" --architecture x86_64 --ena-support
 
 
-
-# --block-device-mappings DeviceName="/dev/sda1",Ebs={SnapshotId="$snapname",VolumeSize=10}
